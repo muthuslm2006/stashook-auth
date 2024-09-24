@@ -15,8 +15,6 @@ module.exports = {
         const password = req.body.password;
 
         connection.query(Queries.LoginAuthenticate, [loginId, loginId, loginId], function (err, results) {
-            console.log(">>>>>>>>>err>>>>>>>>> " + err);
-            console.log(">>>>>>>>>results>>>>>>>>> " + JSON.stringify(results));
 
             if (err === null && results[0] !== undefined) {
                 bcryptjs.compare(password, results[0].userPwd).then(match => {
