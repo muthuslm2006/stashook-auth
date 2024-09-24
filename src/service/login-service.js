@@ -11,8 +11,8 @@ module.exports = {
 
         console.log("Authenitcate Query ::: " + Queries.LoginAuthenticate);
 
-        const loginId = req.query.username || '10504';
-        const password = req.query.password || 'Test@1234';
+        const loginId = req.body.username;
+        const password = req.body.password;
 
         connection.query(Queries.LoginAuthenticate, [loginId], function (err, results) {
 

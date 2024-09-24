@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "3fa9a960-24d1-40d6-a350-a69411c2016a",
+		"name": "Stashook-Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6436539"
+	},
+	"item": [
+		{
+			"name": "Login-Success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"10504\",\r\n    \"password\":\"Test@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/stashook/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"stashook",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-Failure",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"10504\",\r\n    \"password\":\"Test@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/stashook/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"stashook",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-Invalid",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"10504XXX\",\r\n    \"password\":\"Test@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/stashook/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"stashook",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

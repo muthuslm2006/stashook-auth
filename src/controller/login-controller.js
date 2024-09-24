@@ -6,10 +6,7 @@ module.exports = {
     authenticate: async function (req, res, next) {
         try {
 
-            const loginId = req.query.username || '10504';
-            const password = req.query.username || 'Test@1234';
-
-            if (loginId && password) {
+            if (req.body.username && req.body.password) {
                 loginService.authenticate(req, res, next);
             }
             else {
