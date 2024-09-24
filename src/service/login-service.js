@@ -1,6 +1,6 @@
 const jsonWebToken = require('jsonwebtoken');
 const connection = require('../config/db-connect');
-const helper = require('../config/helper');
+const bcryptjs = require('bcryptjs');
 const Queries = require('../dao/queries');
 const Util = require('../dao/util');
 const Message = require('../dao/message');
@@ -17,7 +17,7 @@ module.exports = {
         connection.query(Queries.LoginAuthenticate, [loginId], function (err, results) {
 
             if (err === null && results[0] !== undefined) {
-                helper.verifyPassword(password, results[0].userPwd).then(match => {
+                bcryptjs.compare(password, results[0].userPwd).then(match => {
 
                     if (match) {
 
@@ -40,27 +40,4 @@ module.exports = {
             }
         });
     }
-}
-
-
-const validateAuthentication = (req, res, next) => {
-
-    const authHeader = req.headers['authorization'];
-
-    const token = authHeader && authHeader.split(" ")[1];
-
-    if (!token) return res.sendStatus(401);
-
-    jsonWebToken.verify(token, process.env.ACCESS_TOKEN, (err, obj) => {
-
-        if (err) {
-            console.log("Authentication Failure. Invalid Token :: ", err);
-            return res.sendStatus(403);
-        }
-
-        req.username = obj.username;
-        req.password = obj.password;
-        next();
-
-    })
 }
