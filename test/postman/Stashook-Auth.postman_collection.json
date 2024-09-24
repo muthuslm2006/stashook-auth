@@ -7,13 +7,71 @@
 	},
 	"item": [
 		{
-			"name": "Login-Success",
+			"name": "Login-Success - Id",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\r\n    \"username\":\"10504\",\r\n    \"password\":\"Test@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/stashook/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"stashook",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-Success Email",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"mgandeeban@stashook.com\",\r\n    \"password\":\"Test@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/stashook/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"stashook",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login-Success Mobile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"9790756096\",\r\n    \"password\":\"Test@1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

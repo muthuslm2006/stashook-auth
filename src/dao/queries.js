@@ -1,4 +1,4 @@
 module.exports = {
 
-    LoginAuthenticate : `SELECT * FROM users WHERE status = 1 AND employeeId = ?`
+    LoginAuthenticate : `SELECT U.userPwd, U.employeeId FROM users U JOIN usersmedia UM ON U.employeeId = UM.employeeId WHERE U.status = 1 AND (U.employeeId = ? OR UM.emailId = ? OR UM.mobileNo = ?)`
 }
