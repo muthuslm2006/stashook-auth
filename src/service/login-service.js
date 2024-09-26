@@ -1,8 +1,7 @@
 const jsonWebToken = require('jsonwebtoken');
-const connection = require('../config/db-connect');
+const {Util, Connection} = require('../../node_modules/stashook-utils');
 const bcryptjs = require('bcryptjs');
 const Queries = require('../dao/queries');
-const Util = require('../dao/util');
 const Message = require('../dao/message');
 const UsersLogModel = require('../model/userslog');
 
@@ -14,7 +13,7 @@ module.exports = {
         const loginId = req.body.username;
         const password = req.body.password;
 
-        connection.query(Queries.LoginAuthenticate, [loginId, loginId, loginId], function (err, results) {
+        Connection.query(Queries.LoginAuthenticate, [loginId, loginId, loginId], function (err, results) {
 
             if (err === null && results[0] !== undefined) {
                 bcryptjs.compare(password, results[0].userPwd).then(match => {

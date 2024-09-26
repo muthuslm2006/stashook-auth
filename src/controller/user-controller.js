@@ -1,4 +1,4 @@
-const Util = require('../dao/util');
+const {Util} = require('../../node_modules/stashook-utils');
 const Message = require('../dao/message');
 const userService = require('../service/user-service');
 

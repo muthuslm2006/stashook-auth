@@ -1,5 +1,4 @@
-const Model = require('../model/model')
-const Util = require('../dao/util');
+const {Util, Connection, Helper, Model} = require('../../node_modules/stashook-utils');
 
 module.exports = new class UsersModel extends Model {
 
