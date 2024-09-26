@@ -1,8 +1,8 @@
 const jsonWebToken = require('jsonwebtoken');
 const {Util, Connection} = require('../../node_modules/stashook-utils');
 const bcryptjs = require('bcryptjs');
-const Queries = require('../dao/queries');
-const Message = require('../dao/message');
+const Queries = require('../util/queries');
+const Message = require('../util/message');
 const UsersLogModel = require('../model/userslog');
 
 module.exports = {

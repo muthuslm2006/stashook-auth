@@ -1,5 +1,5 @@
 const {Util} = require('../../node_modules/stashook-utils');
-const Message = require('../dao/message');
+const Message = require('../util/message');
 const loginService = require('../service/login-service');
 
 module.exports = {
