@@ -1,5 +1,5 @@
 const jsonWebToken = require('jsonwebtoken');
-const {Util, Connection} = require('../../node_modules/stashook-utils');
+const {Util, Connection} = require('stashook-utils');
 const bcryptjs = require('bcryptjs');
 const Queries = require('../util/queries');
 const Message = require('../util/message');
@@ -40,3 +40,5 @@ module.exports = {
         });
     }
 }
+
+

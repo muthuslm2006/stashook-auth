@@ -16,7 +16,7 @@ module.exports = {
 
         res.json("Delete User");
     },
-    deleteUser: async (req, res, next) => { //hardDelete
+    permanentDeleteUser: async (req, res, next) => { //hardDelete
 
         res.json("Permanent Delete  User");
     },

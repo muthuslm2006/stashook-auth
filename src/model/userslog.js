@@ -1,9 +1,9 @@
-const {Util, Model} = require('../../node_modules/stashook-utils');
+const {Util, Model} = require('stashook-utils');
 
 module.exports = new class UsersLogModel extends Model {
 
   constructor() {
-    super('userslog');
+    super('userslog'); // Table Name
   }
 
   createData(results) {

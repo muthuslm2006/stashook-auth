@@ -1,4 +1,4 @@
-const {Util} = require('../../node_modules/stashook-utils');
+const {Util} = require('stashook-utils');
 const Message = require('../util/message');
 const loginService = require('../service/login-service');
 

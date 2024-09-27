@@ -21,7 +21,7 @@
     "morgan": "~1.9.1",
     "mysql2": "^3.11.3",
     "nodemon": "^3.1.4",
-    "stashook-utils": "^1.0.0"
+    "stashook-utils": "^0.0.7"
   },
   "devDependencies": {
     "clean-package": "^2.2.0"
