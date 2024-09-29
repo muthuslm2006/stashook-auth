@@ -1,10 +1,13 @@
 const jsonWebToken = require('jsonwebtoken');
-const {Util, Connection} = require('stashook-utils');
+const { Util, Connection } = require('stashook-utils');
 const bcryptjs = require('bcryptjs');
 const Queries = require('../util/queries');
 const Message = require('../util/message');
 const UsersLogModel = require('../model/userslog');
 
+const AUTHORIZATION = 'authorization';
+const APPLICATION_JSON = 'application/json';
+const ORIGIN = ' <origin>';
 module.exports = {
     authenticate: async function (req, res, next) {
 
@@ -20,7 +23,7 @@ module.exports = {
 
                     if (match) {
 
-                        UsersLogModel.create('autoId', UsersLogModel.createData(results));
+                        UsersLogModel.create(UsersLogModel.createData(results));
 
                         let accessToken = jsonWebToken.sign({ loginId: loginId, password }, process.env.ACCESS_TOKEN);
 
@@ -38,6 +41,31 @@ module.exports = {
                 Util.sendError401(res, Message.USER_NOT_FOUND);
             }
         });
+    },
+
+    validateAuthToken: async function (req, res, next) {
+        headers = {
+
+            'Content-Type': APPLICATION_JSON,
+            "Access-Control-Allow-Origin": ORIGIN,
+            "Access-Control-Allow-Credentials": true
+        };
+
+        const authHeader = req.headers[AUTHORIZATION];
+        const token = authHeader && authHeader.split(" ")[1];
+
+        if (!token) return Util.sendError401(res);
+
+        jsonWebToken.verify(token, process.env.ACCESS_TOKEN, (err, obj) => {
+
+            console.log("Authenticate Token Successfully :::");
+
+            if (err) return Util.sendError401(res);
+
+            req.username = obj.username;
+            req.password = obj.password;
+            next();
+        })
     }
 }
 
