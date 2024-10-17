@@ -3,15 +3,13 @@ const { Util, Connection } = require('stashook-utils');
 const bcryptjs = require('bcryptjs');
 const Queries = require('../util/queries');
 const Message = require('../util/message');
+const Logger = require('../util/logger');
 const UsersLogModel = require('../model/userslog');
 
-const AUTHORIZATION = 'authorization';
-const APPLICATION_JSON = 'application/json';
-const ORIGIN = ' <origin>';
 module.exports = {
-    authenticate: async function (req, res, next) {
+    generateAccessToken: async function (req, res, next) {
 
-        console.log("Authenitcate Query ::: " + Queries.LoginAuthenticate);
+        Logger.info("Authenitcate Query ::: " + Queries.LoginAuthenticate);
 
         const loginId = req.body.username;
         const password = req.body.password;
@@ -23,16 +21,17 @@ module.exports = {
 
                     if (match) {
 
-                        UsersLogModel.create(UsersLogModel.createData(results));
+                        Connection.query(Queries.UserRolesSelect, [results[0].employeeId], function (err, roleResults) {
 
-                        let accessToken = jsonWebToken.sign({ loginId: loginId, password }, process.env.ACCESS_TOKEN);
+                            UsersLogModel.create(UsersLogModel.createData(results));
+                            let accessToken = jsonWebToken.sign(createTokenData(results[0], roleResults), process.env.ACCESS_TOKEN);
 
-                        res.status(200).send({
-                            accesstoken: accessToken,
-                            employeeId: results[0].employeeId,
-                            message: Message.USER_LOGGED_IN_SUCCESSFULLY
+                            res.status(200).send({
+                                accesstoken: accessToken,
+                                message: Message.USER_LOGGED_IN_SUCCESSFULLY
+                            });
+                            res.end();
                         });
-                        res.end();
                     } else {
                         Util.sendError401(res, Message.USER_LOGGED_IN_FAILED);
                     }
@@ -41,31 +40,28 @@ module.exports = {
                 Util.sendError401(res, Message.USER_NOT_FOUND);
             }
         });
-    },
+    }
+}
 
-    validateAuthToken: async function (req, res, next) {
-        headers = {
+function createTokenData(user, roleResults) {
 
-            'Content-Type': APPLICATION_JSON,
-            "Access-Control-Allow-Origin": ORIGIN,
-            "Access-Control-Allow-Credentials": true
-        };
+    let isAdmin = false;
+    let roles = [] ;
 
-        const authHeader = req.headers[AUTHORIZATION];
-        const token = authHeader && authHeader.split(" ")[1];
-
-        if (!token) return Util.sendError401(res);
-
-        jsonWebToken.verify(token, process.env.ACCESS_TOKEN, (err, obj) => {
-
-            console.log("Authenticate Token Successfully :::");
-
-            if (err) return Util.sendError401(res);
-
-            req.username = obj.username;
-            req.password = obj.password;
-            next();
-        })
+    roleResults.forEach(element => {
+        if(element.isAdmin && !isAdmin)
+            isAdmin = true;
+        roles.push(element.roleId)
+    });
+    
+    return {
+        employeeId: user.employeeId,
+        userId: user.userId,
+        userName: user.userName,
+        producerId: user.producerId,
+        userType: user.userType,
+        roles: roles,
+        isAdmin: isAdmin
     }
 }
 

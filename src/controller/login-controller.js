@@ -7,7 +7,7 @@ module.exports = {
         try {
 
             if (req.body.username && req.body.password) {
-                loginService.authenticate(req, res, next);
+                loginService.generateAccessToken(req, res, next);
             }
             else {
                 Util.sendError401(res, Message.USER_LOGGED_IN_FAILED);
